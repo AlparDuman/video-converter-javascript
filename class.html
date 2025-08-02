@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head></head>
+
+<body style="background-color: #111; color: #EEE;">
+    <script src="ffmpeg/ffmpeg.min.js"></script>
+    <script src="videoConverter.class.js"></script>
+
+    <input type="file" id="uploader" accept="video/*" />
+    <p id="status">No file loaded</p>
+    <p id="progress"></p>
+    <video id="video" controls width="480"></video>
+
+    <script>
+        const videoConverter = new VideoConverter(
+            document.getElementById('uploader'),
+            document.getElementById('status'),
+            document.getElementById('progress'),
+            document.getElementById('video')
+        );
+        videoConverter.setShowConsole(true);
+        videoConverter.setTargetSize(9 * 1024 * 1024 * 8);
+        videoConverter.setAudioBitrate(128 * 1000);
+        videoConverter.setFramerate(30);
+        videoConverter.setResolution([1280, 1280]);
+    </script>
+</body>
+
+</html>
