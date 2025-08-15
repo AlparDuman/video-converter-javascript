@@ -3,7 +3,7 @@
 
 <head></head>
 
-<body style="background-color: #111; color: #EEE;">
+<!--<body style="background-color: #111; color: #EEE;">
     <script src="ffmpeg/ffmpeg.min.js"></script>
     <script src="videoConverter.class.js"></script>
 
@@ -24,6 +24,19 @@
         videoConverter.setAudioBitrate(128 * 1000);
         videoConverter.setFramerate(30);
         videoConverter.setResolution([1280, 1280]);
+    </script>
+</body>-->
+
+<body style="background-color: #111; color: #EEE;">
+    <script src="ffmpeg/ffmpeg.min.js"></script>
+    <script src="videoConverter.class.js"></script>
+
+    <div id="ffmpeg_converter"></div>
+
+    <script>
+        const videoConverter = new VideoConverter(
+            document.getElementById('ffmpeg_converter')
+        );
     </script>
 </body>
 
