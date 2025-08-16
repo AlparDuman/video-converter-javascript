@@ -81,6 +81,30 @@ class VideoConverter {
 
 
 
+  async #testSupport() {
+
+    const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
+
+    if (!isFirefox) return false;
+    if (typeof SharedArrayBuffer !== "function") return false;
+    if (typeof Atomics === "undefined" || typeof Atomics.wait !== "function") return false;
+
+    try {
+
+      const moduleBytes = new Uint8Array([0x00, 0x61, 0x73, 0x6d, 0x01, 0x00, 0x00, 0x00]);
+      const module = await WebAssembly.compile(moduleBytes);
+      return module instanceof WebAssembly.Module;
+
+    } catch (e) {
+
+      return false;
+
+    }
+
+  }
+
+
+
   async #progressiveConvert(file) {
 
     // get current cycle & force stop running worker
@@ -105,7 +129,7 @@ class VideoConverter {
       this.#element_video.play();
 
     // convert slow to get high quality result
-    /*if (cycle == this.#cycle) {
+    /**/if (cycle == this.#cycle) {
       this.#prefix_status = '(optional quality pass) ';
       await this.#convert(file, {
         'a_bitrate': 192 * 1000,
@@ -115,7 +139,7 @@ class VideoConverter {
         'v_ref': 3,
         'v_res': [1280, 1280]
       });
-    }*/
+    }/**/
 
   }
 
@@ -195,12 +219,22 @@ class VideoConverter {
     // load ffmpeg
     this.#element_status.textContent = `${this.#prefix_status}Loading FFmpeg ...`;
 
-    await this.#ffmpeg.load({
-      coreURL: 'ffmpeg-core.js'/*/,
-      wasmURL: 'ffmpeg/ffmpeg-core.wasm',
-      workerURL: 'ffmpeg/ffmpeg-core.worker.js',
-      classWorkerURL: 'ffmpeg/ffmpeg-core.worker.js'/*/
-    });
+    if (await this.#testSupport()) {
+
+      await this.#ffmpeg.load({
+        coreURL: 'ffmpeg-core-mt.js',
+        wasmURL: 'ffmpeg-core-mt.wasm',
+        workerURL: 'ffmpeg-core-mt.worker.js'
+      });
+
+    } else {
+
+      await this.#ffmpeg.load({
+        coreURL: 'ffmpeg-core-st.js',
+        wasmURL: 'ffmpeg-core-st.wasm'
+      });
+
+    }
 
     // import video
     this.#element_status.textContent = `${this.#prefix_status}Importing video ...`;
