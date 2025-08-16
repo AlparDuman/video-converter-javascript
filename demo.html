@@ -20,19 +20,13 @@
         videoConverter.customQueries([
             {
                 'a_bitrate': 128 * 1000,
-                's_target': 9 * 1024 * 1024 * 8,
                 'v_fps': 30,
-                'v_preset': 'ultrafast',
-                'v_ref': 1,
                 'v_res': [640, 640],
                 'autoplay': true
             }, {
                 'a_bitrate': 192 * 1000,
-                's_target': 9 * 1024 * 1024 * 8,
-                'v_fps': 30,
                 'v_preset': 'placebo',
-                'v_ref': 4,
-                'v_res': [1280, 1280]
+                'v_ref': 4
             }
         ]);
     </script>
