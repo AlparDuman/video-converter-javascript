@@ -90,14 +90,14 @@ class VideoConverter {
     // convert fast to get first quickly result
     if (cycle == this.#cycle) {
       this.#prefix_status = '';
-      await this.#convert(file/*, {
+      await this.#convert(file, {
         'a_bitrate': 128 * 1000,
         's_target': 9 * 1024 * 1024 * 8,
         'v_fps': 30,
         'v_preset': 'ultrafast',
         'v_ref': 1,
         'v_res': [640, 640]
-      }*/);
+      });
     }
 
     // autoplay first pass
@@ -105,17 +105,17 @@ class VideoConverter {
       this.#element_video.play();
 
     // convert slow to get high quality result
-    if (cycle == this.#cycle) {
+    /*if (cycle == this.#cycle) {
       this.#prefix_status = '(optional quality pass) ';
-      await this.#convert(file/*, {
+      await this.#convert(file, {
         'a_bitrate': 192 * 1000,
         's_target': 9 * 1024 * 1024 * 8,
         'v_fps': 60,
         'v_preset': 'placebo',
         'v_ref': 3,
         'v_res': [1280, 1280]
-      }*/);
-    }
+      });
+    }*/
 
   }
 
