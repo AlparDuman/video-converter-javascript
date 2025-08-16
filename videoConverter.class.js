@@ -81,7 +81,7 @@ class VideoConverter {
 
 
 
-  async #testSupport() {
+  async #testMtSupport() {
 
     const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
@@ -219,7 +219,7 @@ class VideoConverter {
     // load ffmpeg
     this.#element_status.textContent = `${this.#prefix_status}Loading FFmpeg ...`;
 
-    if (await this.#testSupport()) {
+    if (await this.#testMtSupport()) {
 
       await this.#ffmpeg.load({
         coreURL: 'ffmpeg-core-mt.js',
