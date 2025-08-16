@@ -44,7 +44,7 @@ const videoConverter = new VideoConverter(
 
 It uses queries to encode the input video and replaces the output video when it is finished.
 Each query replaces the previous video result in the output video.
-By default, it has a template query for encoding. If no user-defined query is specified, this query is used. If user-defined queries are specified, they override valid entries.
+By default, it has a template query for encoding. If no user-defined query is specified, this query is used. If user-defined queries are specified, valid entries override default entries.
 
 | key | default | description | override condition |
 |-----|---------|-------------|--------------------|
