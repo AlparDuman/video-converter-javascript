@@ -4,7 +4,7 @@ A JavaScript class that uses [FFmpeg powered by WebAssembly](https://github.com/
 If a compatible browser is detected, multithreading is used for encoding.
 
 > [!NOTE]
-> The core of FFmpeg.wasm, which was developed for multithreading, is unstable in Chromium and runs even worse in Safari due to the faulty or incomplete WebAssembly threading support in these browsers.
+> The core of FFmpeg.wasm, which was developed for multithreading, is unstable in Chromium and runs significantly poorer in Safari due to the faulty or incomplete WebAssembly threading support in these browsers.
 > Therefore, the class only uses the multithreading core with Firefox and checks whether the necessary dependencies for threaded WebAssembly are present.
 > The simpler core is used as a fallback.
 
@@ -78,7 +78,7 @@ In addition, each query is supplemented by:
 
 | key | value | description |
 |-----|-------|-------------|
-| movflags | +faststart | The video can be started before it is fully loaded |
+| movflags | +faststart | The video can begin prior to it being fully preloaded |
 | tag:v | avc1 | Ensures compatibility and correct codec signalling |
 | map | 0:v:0 | Only receive the first video stream |
 | c:v | libx264 | Use x264 to encode to h264 |
