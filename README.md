@@ -1,6 +1,6 @@
 # Video Converter Javascript
 
-A JavaScript class that uses FFmpeg with WebAssembly to convert videos locally in the browser.
+A JavaScript class that uses [FFmpeg powered by WebAssembly](https://github.com/ffmpegwasm/ffmpeg.wasm) to convert videos locally in the browser.
 If a compatible browser is detected, multithreading is used for encoding.
 
 > [!NOTE]
