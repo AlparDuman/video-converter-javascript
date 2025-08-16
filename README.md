@@ -10,10 +10,11 @@ If a compatible browser is detected, multithreading is used for encoding.
 
 
 
-## Table of Contents
-- [Installation](#installation)
-- [Usage](#usage)
-- [License](#license)
+| Table of Contents |
+| - |
+| [Installation](#installation) |
+| [Usage](#usage) |
+| [License](#license) |
 
 
 
