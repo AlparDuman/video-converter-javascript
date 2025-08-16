@@ -355,7 +355,7 @@ class VideoConverter {
 
       // refresh video
       this.#element_video.load();
-      this.#element_status.textContent = `${this.#prefix_status}Conversion finished!`;
+      this.#element_status.textContent = 'Conversion finished!';
 
     } catch (error) {
 
