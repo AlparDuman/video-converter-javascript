@@ -26,10 +26,10 @@ class VideoConverter {
   #element_video;
   #default_config;
   #available_presets;
-  #cycle;
   #c_message;
   #duration;
   #prefix_status;
+  #queries;
 
 
 
@@ -57,9 +57,9 @@ class VideoConverter {
       'veryslow',
       'placebo'
     ];
-    this.#cycle = 0;
     this.#duration = 1;
     this.#prefix_status = '';
+    this.#queries = [this.#default_config];
 
     // create elements
     const element_input = document.createElement('input');
@@ -125,41 +125,40 @@ class VideoConverter {
 
 
 
-  async #progressiveConvert(file) {
+  customQueries(queries) {
 
-    // get current cycle & force stop running worker
-    const cycle = ++this.#cycle;
+    // abort on no queries given
+    if (!Array.isArray(queries) || queries.length < 1)
+      return;
+
+    // queue each query
+    this.#queries = [];
+
+    for (let query of queries)
+      this.#queries.push({ ...this.#applyConfig(query) });
+
+  }
+
+
+
+  async #queueConvert(file) {
+
+    // force stop running worker
     this.#ffmpeg.terminate();
 
-    // convert fast to get first quickly result
-    if (cycle == this.#cycle) {
-      this.#prefix_status = '';
-      await this.#convert(file, {
-        'a_bitrate': 128 * 1000,
-        's_target': 9 * 1024 * 1024 * 8,
-        'v_fps': 30,
-        'v_preset': 'ultrafast',
-        'v_ref': 1,
-        'v_res': [640, 640]
-      });
+    // convert file for each query
+    let i = 1;
+    let limit = this.#queries.length;
+
+    for (const query of this.#queries) {
+
+      this.#prefix_status = `(Pass ${i++}/${limit}) `;
+      await this.#convert(file, query);
+
+      if (query['autoplay'])
+        this.#element_video.play();
+
     }
-
-    // autoplay first pass
-    if (cycle == this.#cycle)
-      this.#element_video.play();
-
-    // convert slow to get high quality result
-    /**/if (cycle == this.#cycle) {
-      this.#prefix_status = '(optional quality pass) ';
-      await this.#convert(file, {
-        'a_bitrate': 192 * 1000,
-        's_target': 9 * 1024 * 1024 * 8,
-        'v_fps': 60,
-        'v_preset': 'placebo',
-        'v_ref': 3,
-        'v_res': [1280, 1280]
-      });
-    }/**/
 
   }
 
@@ -359,7 +358,7 @@ class VideoConverter {
 
     } catch (error) {
 
-      // was force stopped by next cycle or by error
+      // was force stopped by next file or by error
       if (error?.message?.includes('called FFmpeg.terminate'))
         console.warn('Encoding was aborted');
       else
