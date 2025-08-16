@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>demo</title>
+</head>
+
+<body style="background-color: #111; color: #EEE;">
+    <script src="/ffmpeg-hybrid/ffmpeg.min.js"></script>
+    <script src="/videoConverter.class.js"></script>
+
+    <div id="ffmpeg_converter"></div>
+
+    <script>
+        const videoConverter = new VideoConverter(
+            document.getElementById('ffmpeg_converter')
+        );
+        videoConverter.customQueries([
+            {
+                'a_bitrate': 128 * 1000,
+                's_target': 9 * 1024 * 1024 * 8,
+                'v_fps': 30,
+                'v_preset': 'ultrafast',
+                'v_ref': 1,
+                'v_res': [640, 640],
+                'autoplay': true
+            }, {
+                'a_bitrate': 192 * 1000,
+                's_target': 9 * 1024 * 1024 * 8,
+                'v_fps': 30,
+                'v_preset': 'placebo',
+                'v_ref': 4,
+                'v_res': [1280, 1280]
+            }
+        ]);
+    </script>
+</body>
+
+</html>
