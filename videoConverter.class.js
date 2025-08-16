@@ -30,10 +30,11 @@ class VideoConverter {
   #duration;
   #prefix_status;
   #queries;
+  #forceSingleThreaded;
 
 
 
-  constructor(element_parent) {
+  constructor(element_parent, forceSingleThreaded = false) {
 
     // prepare
     this.#default_config = {
@@ -60,6 +61,7 @@ class VideoConverter {
     this.#duration = 1;
     this.#prefix_status = '';
     this.#queries = [this.#default_config];
+    this.#forceSingleThreaded = forceSingleThreaded;
 
     // create elements
     const element_input = document.createElement('input');
@@ -106,6 +108,7 @@ class VideoConverter {
     const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
     if (!isFirefox) return false;
+    if (this.#forceSingleThreaded) return false;
     if (typeof SharedArrayBuffer !== "function") return false;
     if (typeof Atomics === "undefined" || typeof Atomics.wait !== "function") return false;
 
