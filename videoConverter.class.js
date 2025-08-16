@@ -21,9 +21,10 @@ class VideoConverter {
       'a_bitrate': null,
       's_target': null,
       'v_fps': null,
-      'v_preset': 'placebo',
-      'v_ref': 4,
-      'v_res': [null, null]
+      'v_preset': 'ultrafast',
+      'v_ref': 1,
+      'v_res': [null, null],
+      'autoplay': false
     };
     this.#available_presets = [
       'ultrafast',
@@ -199,6 +200,13 @@ class VideoConverter {
         config['w_count'] = custom['w_count'];
       else
         throw new Error('Invalid value for worker count given, expected 1 <= x');
+
+    // check & apply autoplay
+    if (custom['autoplay'])
+      if (typeof custom['autoplay'] === 'boolean')
+        config['autoplay'] = custom['autoplay'];
+      else
+        throw new Error('Invalid value for autoplay given, expected boolean');
 
     // return config with applied custom values
     return config;
