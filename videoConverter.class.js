@@ -94,7 +94,7 @@ class VideoConverter {
 
     // event listener
     element_input.addEventListener('change', (event) => {
-      this.#progressiveConvert(event.target.files?.[0]);
+      this.#queueConvert(event.target.files?.[0]);
     });
 
   }
